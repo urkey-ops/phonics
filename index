@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pat a Cat Phonics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        h1, h3 {
+            color: #16a34a;
+            font-weight: 700;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #065f46;
+        }
+        .section-title h3 {
+            margin: 0;
+        }
+        .icon {
+            font-size: 1.5rem;
+        }
+        .short-a-word {
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            display: inline-block;
+        }
+        .short-a-word:hover {
+            transform: scale(1.1);
+            color: #f97316;
+        }
+        .highlighted {
+            background-color: #fde68a;
+            padding: 0 0.25rem;
+            border-radius: 0.25rem;
+        }
+        .correct-feedback {
+            color: #16a34a;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .incorrect-feedback {
+            color: #dc2626;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .message-box {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center p-4 min-h-screen">
+
+<div class="container flex flex-col gap-8">
+    
+    <div class="text-center">
+        <h1 class="text-emerald-600">Lesson 1: Pat a Cat 🐱</h1>
+    </div>
+
+    <!-- Phonics Focus & Words -->
+    <div class="bg-emerald-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">✨</span>
+            <h3 class="text-emerald-700">Phonics Focus: Short 'a'</h3>
+        </div>
+        <p class="mt-2 text-gray-700">Today's sound is short **a** like in c**a**t.</p>
+        <div class="section-title mt-6">
+            <span class="icon">📚</span>
+            <h3 class="text-emerald-700">Words We Know</h3>
+        </div>
+        <div id="words-we-know" class="flex flex-wrap gap-4 mt-2 text-xl font-semibold">
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">c**a**t</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">m**a**t</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">r**a**n</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">s**a**d</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">b**a**g</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">j**a**m</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">p**a**d</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">h**a**t</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">l**a**p</span>
+        </div>
+    </div>
+
+    <!-- Reading Story -->
+    <div class="bg-yellow-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">📖</span>
+            <h3 class="text-yellow-700">Reading Story: Pat the Cat</h3>
+        </div>
+        <p class="mt-2 text-gray-700">Click on the words with a short 'a' sound to highlight them!</p>
+        <div id="story-1-text" class="text-lg leading-relaxed mt-4">
+            A cat sat on a mat. The cat is fat. Pat the cat. The cat is happy. Sam has a bag. The bag has jam. Sam is not sad. Sam has a hat. He ran to get his hat. He is happy!
+        </div>
+    </div>
+
+    <!-- Grammar Time -->
+    <div class="bg-blue-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">📝</span>
+            <h3 class="text-blue-700">Grammar Time!</h3>
+        </div>
+        <p class="mt-2 text-gray-700">**Tip Box:** Every sentence starts with a capital letter and ends with a period (.). Fix the sentences below.</p>
+        <div id="grammar-activity" class="mt-4 flex flex-col gap-4">
+            <div class="flex items-center gap-2">
+                <input type="text" id="grammar-input-1" placeholder="a cat sat on a mat" class="flex-grow p-2 rounded-md border border-blue-200">
+                <button onclick="checkGrammar(1)" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors">Check</button>
+            </div>
+            <div class="flex items-center gap-2">
+                <input type="text" id="grammar-input-2" placeholder="the man ran" class="flex-grow p-2 rounded-md border border-blue-200">
+                <button onclick="checkGrammar(2)" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors">Check</button>
+            </div>
+            <div class="flex items-center gap-2">
+                <input type="text" id="grammar-input-3" placeholder="i have a bag" class="flex-grow p-2 rounded-md border border-blue-200">
+                <button onclick="checkGrammar(3)" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors">Check</button>
+            </div>
+            <div class="flex items-center gap-2">
+                <input type="text" id="grammar-input-4" placeholder="the cat is happy" class="flex-grow p-2 rounded-md border border-blue-200">
+                <button onclick="checkGrammar(4)" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors">Check</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Writing Challenge -->
+    <div class="bg-lime-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">✍️</span>
+            <h3 class="text-lime-700">Writing Challenge!</h3>
+        </div>
+        <p class="mt-2 text-gray-700">Write a sentence about a cat. Use at least one word from the "Words We Know" list.</p>
+        <textarea id="writing-input" rows="3" class="w-full mt-4 p-2 rounded-md border border-lime-200" placeholder="Type your sentence here..."></textarea>
+        <button onclick="checkWriting()" class="bg-lime-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-lime-600 transition-colors mt-2">Check</button>
+        <p id="writing-feedback" class="mt-2 text-sm"></p>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Story Highlighter ---
+        const storyText = document.getElementById('story-1-text');
+        const shortAWords = ["cat", "sat", "mat", "fat", "pat", "has", "bag", "jam", "sad", "hat", "ran", "happy"];
+        const storyWords = storyText.textContent.trim().split(/\s+/);
+        storyText.innerHTML = '';
+        storyWords.forEach(word => {
+            const span = document.createElement('span');
+            span.textContent = word + ' ';
+            const cleanedWord = word.toLowerCase().replace(/[.,!?'"]/, '');
+            if (shortAWords.includes(cleanedWord)) {
+                span.classList.add('short-a-word');
+                span.addEventListener('click', () => {
+                    span.classList.toggle('highlighted');
+                });
+            }
+            storyText.appendChild(span);
+        });
+
+        // --- Words We Know Pop-up ---
+        const wordsWeKnow = document.querySelectorAll('#words-we-know .short-a-word');
+        wordsWeKnow.forEach(wordSpan => {
+            wordSpan.addEventListener('click', () => {
+                showFeedback(`Great job! You know the word: ${wordSpan.textContent.trim()}`);
+            });
+        });
+    });
+
+    /**
+     * Shows a message in a pop-up style box.
+     * @param {string} message The message to display.
+     * @param {string} type 'correct' or 'incorrect' to style the message.
+     */
+    function showFeedback(message, type = 'correct') {
+        let feedbackContainer = document.getElementById('feedback-container');
+        if (!feedbackContainer) {
+            feedbackContainer = document.createElement('div');
+            feedbackContainer.id = 'feedback-container';
+            feedbackContainer.className = 'fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50';
+            document.body.appendChild(feedbackContainer);
+        }
+
+        const box = document.createElement('div');
+        box.className = `p-6 rounded-xl shadow-2xl transition-all duration-300 transform scale-0 opacity-0 ${type === 'correct' ? 'bg-green-100 border-green-500 text-green-700' : 'bg-red-100 border-red-500 text-red-700'}`;
+        box.style.minWidth = '250px';
+        box.style.borderColor = type === 'correct' ? '#16a34a' : '#dc2626';
+        box.style.borderWidth = '4px';
+
+        const messageText = document.createElement('p');
+        messageText.className = 'text-lg font-bold text-center';
+        messageText.textContent = message;
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'mt-4 bg-white text-gray-800 font-bold py-2 px-4 rounded-lg shadow-lg hover:bg-gray-200 transition-colors';
+        closeBtn.textContent = 'Awesome!';
+        closeBtn.onclick = () => {
+            box.classList.add('scale-0', 'opacity-0');
+            setTimeout(() => {
+                feedbackContainer.remove();
+            }, 300);
+        };
+
+        box.appendChild(messageText);
+        box.appendChild(closeBtn);
+        feedbackContainer.innerHTML = '';
+        feedbackContainer.appendChild(box);
+
+        // Animate the pop-up
+        setTimeout(() => {
+            box.classList.remove('scale-0', 'opacity-0');
+            box.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+
+    /**
+     * Checks the grammar input fields for correct capitalization and punctuation.
+     * @param {number} sentenceIndex The index of the sentence to check (1-4).
+     */
+    function checkGrammar(sentenceIndex) {
+        const input = document.getElementById(`grammar-input-${sentenceIndex}`);
+        const userText = input.value.trim();
+        let isCorrect = false;
+
+        if (userText.length > 0) {
+            const firstChar = userText.charAt(0);
+            const lastChar = userText.charAt(userText.length - 1);
+            if (firstChar === firstChar.toUpperCase() && lastChar === '.') {
+                isCorrect = true;
+            }
+        }
+
+        if (isCorrect) {
+            showFeedback('You got it! Great job with the grammar!');
+            input.classList.remove('border-red-500');
+            input.classList.add('border-green-500');
+        } else {
+            showFeedback('Oops! Remember to start with a capital letter and end with a period.', 'incorrect');
+            input.classList.remove('border-green-500');
+            input.classList.add('border-red-500');
+        }
+    }
+
+    /**
+     * Checks the writing challenge input for a word from the list.
+     */
+    function checkWriting() {
+        const input = document.getElementById('writing-input');
+        const feedback = document.getElementById('writing-feedback');
+        const userText = input.value.trim().toLowerCase();
+        const shortAWords = ["cat", "mat", "ran", "sad", "bag", "jam", "pad", "hat", "lap"];
+        let found = false;
+
+        shortAWords.forEach(word => {
+            if (userText.includes(word)) {
+                found = true;
+            }
+        });
+
+        if (found) {
+            feedback.textContent = 'Awesome! You used a word from the list. Your writing is fantastic!';
+            feedback.className = 'mt-2 correct-feedback';
+            showFeedback('Awesome! You used a short \'a\' word!');
+        } else {
+            feedback.textContent = 'Keep trying! Can you find a word like "cat" or "ran" to use?';
+            feedback.className = 'mt-2 incorrect-feedback';
+            showFeedback('Hmm, I don\'t see a word from our list. Try again!', 'incorrect');
+        }
+    }
+
+</script>
+
+</body>
+</html>
