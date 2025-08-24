@@ -1,75 +1,412 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pat a Cat 🐱 - Phonics Fun</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background-color: #fef9c3;
-    }
-    .short-a-word {
-      display: inline-block;
-      padding: 0.3rem 0.6rem;
-      margin: 0.2rem;
-      background-color: #fcd34d;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: transform 0.2s, background-color 0.3s;
-    }
-    .short-a-word:hover {
-      transform: scale(1.1);
-      background-color: #fbbf24;
-    }
-    .highlighted {
-      background-color: #86efac !important;
-      color: #065f46;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pat a Cat Phonics Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        h1, h3 {
+            color: #16a34a;
+            font-weight: 700;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #065f46;
+        }
+        .section-title h3 {
+            margin: 0;
+        }
+        .icon {
+            font-size: 1.5rem;
+        }
+        .short-a-word {
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            display: inline-block;
+        }
+        .short-a-word:hover {
+            transform: scale(1.1);
+            color: #f97316;
+        }
+        .highlighted {
+            background-color: #fde68a;
+            padding: 0 0.25rem;
+            border-radius: 0.25rem;
+        }
+        .correct-feedback {
+            color: #16a34a;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .incorrect-feedback {
+            color: #dc2626;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .message-box {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            display: none; /* Hidden by default */
+        }
+        .bold-a {
+            font-weight: 700;
+        }
+        .draggable {
+            cursor: grab;
+            background-color: #c084fc;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .drop-target {
+            border: 2px dashed #a78bfa;
+            border-radius: 0.75rem;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        .dropped {
+            background-color: #e9d5ff;
+            color: #6b21a8;
+            border: 2px solid #a78bfa;
+        }
+    </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6">
+<body class="bg-gray-50 flex items-center justify-center p-4 min-h-screen">
 
-  <div class="bg-white rounded-3xl shadow-2xl max-w-xl w-full p-8 space-y-6">
-    <h1 class="text-3xl font-bold text-center text-emerald-600">🎉 Pat a Cat - Short "A" Fun 🐱</h1>
+<div class="container flex flex-col gap-8">
 
-    <p class="text-lg text-gray-700 text-center">Click on the words with the <strong>short "a"</strong> sound!</p>
-
-    <div id="word-list" class="flex flex-wrap justify-center">
-      <span class="short-a-word">cat</span>
-      <span class="short-a-word">mat</span>
-      <span class="short-a-word">ran</span>
-      <span class="short-a-word">sad</span>
-      <span class="short-a-word">hat</span>
-      <span class="short-a-word">bag</span>
-      <span class="short-a-word">jam</span>
+    <div class="text-center">
+        <h1 class="text-emerald-600">Pat a Cat: Phonics Game! 🐾</h1>
     </div>
 
-    <div class="text-center text-lg mt-6">
-      <p id="message" class="font-semibold text-emerald-600 hidden">🎉 Great job! You found a short "a" word!</p>
+    <div class="bg-emerald-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">✨</span>
+            <h3 class="text-emerald-700">Phonics Focus: Short 'a'</h3>
+        </div>
+        <p class="mt-2 text-gray-700">Today's sound is short <span class="bold-a">a</span> like in c<span class="bold-a">a</span>t.</p>
+        <div class="section-title mt-6">
+            <span class="icon">📚</span>
+            <h3 class="text-emerald-700">Words We Know</h3>
+        </div>
+        <div id="words-we-know" class="flex flex-wrap gap-4 mt-2 text-xl font-semibold">
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">c<span class="bold-a">a</span>t</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">m<span class="bold-a">a</span>t</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">r<span class="bold-a">a</span>n</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">s<span class="bold-a">a</span>d</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">b<span class="bold-a">a</span>g</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">j<span class="bold-a">a</span>m</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">p<span class="bold-a">a</span>d</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">h<span class="bold-a">a</span>t</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">l<span class="bold-a">a</span>p</span>
+        </div>
     </div>
-  </div>
 
-  <script>
-    const words = document.querySelectorAll('.short-a-word');
-    const message = document.getElementById('message');
+    <div class="bg-yellow-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">📖</span>
+            <h3 class="text-yellow-700">Reading Story: Pat the Cat</h3>
+        </div>
+        <p class="mt-2 text-gray-700">Click on the words with a short 'a' sound to highlight them!</p>
+        <div id="story-1-text" class="text-lg leading-relaxed mt-4">
+            A cat sat on a mat. The cat is fat. Pat the cat. The cat is happy. Sam has a bag. The bag has jam. Sam is not sad. Sam has a hat. He ran to get his hat. He is happy!
+        </div>
+    </div>
 
-    words.forEach(word => {
-      word.addEventListener('click', () => {
-        word.classList.toggle('highlighted');
-        message.classList.remove('hidden');
-        message.textContent = `🎉 Great job! You clicked on "${word.textContent}"!`;
-        setTimeout(() => {
-          message.classList.add('hidden');
-        }, 2000);
-      });
+    <div class="bg-yellow-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">📚</span>
+            <h3 class="text-yellow-700">Let's Read Another Story!</h3>
+        </div>
+        <p class="mt-2 text-gray-700">Click on the words with a short 'a' sound to highlight them!</p>
+        <div id="story-2-text" class="text-lg leading-relaxed mt-4">
+            Sam is a boy. He has a cat. The cat is black. The cat is on a soft mat. We can see the cat run. The cat ran fast! The cat is happy now. Sam is not sad. We play with the cat. Sam tosses a red ball. The cat runs after the ball. We love to watch the cat. The cat is a good friend. Sam is happy to have his cat. He pets the cat on its head. The cat likes to be pet. It takes a little nap. The cat is a good pet. This is a happy day!
+        </div>
+    </div>
+
+    <div class="bg-purple-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">🤔</span>
+            <h3 class="text-purple-700">Comprehension Questions</h3>
+        </div>
+        <p class="mt-2 text-gray-700">Fill in the missing words based on the story!</p>
+        <div class="flex flex-col gap-4 mt-4">
+            <div class="flex items-center gap-2">
+                <p>The cat is <input type="text" id="q1-input" class="w-24 p-2 border-b-2 border-purple-300 bg-transparent text-purple-700 font-semibold text-center"></p>
+                <button onclick="checkComprehension(1, 'black')" class="bg-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-purple-600 transition-colors">Check</button>
+            </div>
+            <div class="flex items-center gap-2">
+                <p>The cat sits on a soft <input type="text" id="q2-input" class="w-24 p-2 border-b-2 border-purple-300 bg-transparent text-purple-700 font-semibold text-center"></p>
+                <button onclick="checkComprehension(2, 'mat')" class="bg-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-purple-600 transition-colors">Check</button>
+            </div>
+            <div class="flex items-center gap-2">
+                <p>Sam tosses a red <input type="text" id="q3-input" class="w-24 p-2 border-b-2 border-purple-300 bg-transparent text-purple-700 font-semibold text-center"></p>
+                <button onclick="checkComprehension(3, 'ball')" class="bg-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-purple-600 transition-colors">Check</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-blue-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">📝</span>
+            <h3 class="text-blue-700">Grammar Time!</h3>
+        </div>
+        <p class="mt-2 text-gray-700">Drag the correct punctuation to the end of each sentence!</p>
+        <div class="flex justify-center gap-4 mt-4">
+            <span class="draggable" draggable="true" data-value=".">.</span>
+            <span class="draggable" draggable="true" data-value="!">!</span>
+            <span class="draggable" draggable="true" data-value="?">?</span>
+        </div>
+        <div class="mt-4 flex flex-col gap-4">
+            <div class="flex items-center gap-2">
+                <p>A cat sat on a mat<span class="drop-target w-12 ml-2"></span></p>
+            </div>
+            <div class="flex items-center gap-2">
+                <p>I love my cat<span class="drop-target w-12 ml-2"></span></p>
+            </div>
+            <div class="flex items-center gap-2">
+                <p>Can you see the cat<span class="drop-target w-12 ml-2"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-lime-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">✍️</span>
+            <h3 class="text-lime-700">Writing Challenge!</h3>
+        </div>
+        <p class="mt-2 text-gray-700">Write a sentence about a cat. Use at least one word from the "Words We Know" list.</p>
+        <textarea id="writing-input" rows="3" class="w-full mt-4 p-2 rounded-md border border-lime-200" placeholder="Type your sentence here..."></textarea>
+        <button onclick="checkWriting()" class="bg-lime-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-lime-600 transition-colors mt-2">Check</button>
+        <p id="writing-feedback" class="mt-2 text-sm"></p>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const shortAWords = ["cat", "sat", "mat", "fat", "pat", "has", "bag", "jam", "sad", "hat", "ran", "happy"];
+        
+        // --- Story Highlighters ---
+        function setupStoryHighlighter(storyId) {
+            const storyText = document.getElementById(storyId);
+            // Use the original HTML content to preserve spacing
+            const originalContent = storyText.innerHTML.trim();
+            const words = originalContent.split(/\s+/).filter(word => word !== '');
+            
+            storyText.innerHTML = ''; // Clear the current content
+
+            // Rebuild the content word by word, adding spaces back and wrapping in spans
+            let currentPosition = 0;
+            words.forEach(word => {
+                const span = document.createElement('span');
+                
+                // Add the word's text
+                span.textContent = word;
+                
+                // Check if the word is a short 'a' word, ignoring punctuation
+                const cleanedWord = word.toLowerCase().replace(/[.,!?'"]/, '');
+                if (shortAWords.includes(cleanedWord)) {
+                    span.classList.add('short-a-word');
+                    span.addEventListener('click', () => {
+                        span.classList.toggle('highlighted');
+                    });
+                }
+                
+                storyText.appendChild(span);
+
+                // Add a space after the word, unless it's the last word
+                if (currentPosition < words.length - 1) {
+                    storyText.appendChild(document.createTextNode(' '));
+                }
+                currentPosition++;
+            });
+        }
+
+        setupStoryHighlighter('story-1-text');
+        setupStoryHighlighter('story-2-text');
+
+        // --- Words We Know Pop-up ---
+        const wordsWeKnow = document.querySelectorAll('#words-we-know .short-a-word');
+        wordsWeKnow.forEach(wordSpan => {
+            wordSpan.addEventListener('click', () => {
+                showFeedback(`Great job! You know the word: ${wordSpan.textContent.trim()}`);
+            });
+        });
+
+        // --- Drag and Drop Grammar ---
+        const draggables = document.querySelectorAll('.draggable');
+        const dropTargets = document.querySelectorAll('.drop-target');
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', e.target.dataset.value);
+            });
+        });
+
+        dropTargets.forEach(target => {
+            target.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            target.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const data = e.dataTransfer.getData('text/plain');
+                if (!target.classList.contains('dropped')) {
+                    target.textContent = data;
+                    target.classList.add('dropped');
+                    checkDragDrop(target);
+                }
+            });
+        });
     });
-  </script>
+
+    /**
+     * Shows a message in a pop-up style box.
+     * @param {string} message The message to display.
+     * @param {string} type 'correct' or 'incorrect' to style the message.
+     */
+    function showFeedback(message, type = 'correct') {
+        let feedbackContainer = document.getElementById('feedback-container');
+        if (!feedbackContainer) {
+            feedbackContainer = document.createElement('div');
+            feedbackContainer.id = 'feedback-container';
+            feedbackContainer.className = 'fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50';
+            document.body.appendChild(feedbackContainer);
+        }
+
+        const box = document.createElement('div');
+        box.className = `p-6 rounded-xl shadow-2xl transition-all duration-300 transform scale-0 opacity-0 ${type === 'correct' ? 'bg-green-100 border-green-500 text-green-700' : 'bg-red-100 border-red-500 text-red-700'}`;
+        box.style.minWidth = '250px';
+        box.style.borderColor = type === 'correct' ? '#16a34a' : '#dc2626';
+        box.style.borderWidth = '4px';
+
+        const messageText = document.createElement('p');
+        messageText.className = 'text-lg font-bold text-center';
+        messageText.textContent = message;
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'mt-4 bg-white text-gray-800 font-bold py-2 px-4 rounded-lg shadow-lg hover:bg-gray-200 transition-colors';
+        closeBtn.textContent = 'Awesome!';
+        closeBtn.onclick = () => {
+            box.classList.add('scale-0', 'opacity-0');
+            setTimeout(() => {
+                feedbackContainer.remove();
+            }, 300);
+        };
+
+        box.appendChild(messageText);
+        box.appendChild(closeBtn);
+        feedbackContainer.innerHTML = '';
+        feedbackContainer.appendChild(box);
+
+        // Animate the pop-up
+        setTimeout(() => {
+            box.classList.remove('scale-0', 'opacity-0');
+            box.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+
+    /**
+     * Checks the grammar drag and drop.
+     * @param {HTMLElement} target The drop target element.
+     */
+    function checkDragDrop(target) {
+        const sentenceText = target.previousSibling.textContent.trim().toLowerCase();
+        const droppedValue = target.textContent.trim();
+        let isCorrect = false;
+
+        if (sentenceText.includes("a cat sat on a mat") && droppedValue === '.') {
+            isCorrect = true;
+        } else if (sentenceText.includes("i love my cat") && droppedValue === '!') {
+            isCorrect = true;
+        } else if (sentenceText.includes("can you see the cat") && droppedValue === '?') {
+            isCorrect = true;
+        }
+
+        if (isCorrect) {
+            target.classList.remove('border-red-500');
+            target.classList.add('border-green-500');
+            showFeedback('Correct! You chose the right punctuation!');
+        } else {
+            target.classList.remove('border-green-500');
+            target.classList.add('border-red-500');
+            showFeedback('Oops! That\'s not the right punctuation. Try again!', 'incorrect');
+        }
+    }
+
+    /**
+     * Checks the comprehension questions.
+     * @param {number} questionIndex The index of the question.
+     * @param {string} correctWord The correct answer.
+     */
+    function checkComprehension(questionIndex, correctWord) {
+        const input = document.getElementById(`q${questionIndex}-input`);
+        const userText = input.value.trim().toLowerCase();
+
+        if (userText === correctWord) {
+            input.classList.add('border-green-500');
+            showFeedback('Awesome! That\'s the correct answer!');
+        } else {
+            input.classList.add('border-red-500');
+            showFeedback('Not quite! Read the story again and try to find the answer.', 'incorrect');
+        }
+    }
+
+    /**
+     * Checks the writing challenge input for a word from the list.
+     */
+    function checkWriting() {
+        const input = document.getElementById('writing-input');
+        const feedback = document.getElementById('writing-feedback');
+        const userText = input.value.trim().toLowerCase();
+        const shortAWords = ["cat", "mat", "ran", "sad", "bag", "jam", "pad", "hat", "lap"];
+        let found = false;
+
+        shortAWords.forEach(word => {
+            if (userText.includes(word)) {
+                found = true;
+            }
+        });
+
+        if (found) {
+            feedback.textContent = 'Awesome! You used a word from the list. Your writing is fantastic!';
+            feedback.className = 'mt-2 correct-feedback';
+            showFeedback('Awesome! You used a short \'a\' word!');
+        } else {
+            feedback.textContent = 'Keep trying! Can you find a word like "cat" or "ran" to use?';
+            feedback.className = 'mt-2 incorrect-feedback';
+            showFeedback('Hmm, I don\'t see a word from our list. Try again!', 'incorrect');
+        }
+    }
+</script>
 
 </body>
 </html>
