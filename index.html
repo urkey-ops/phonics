@@ -71,12 +71,15 @@
             border-radius: 0.5rem;
             display: none; /* Hidden by default */
         }
+        .bold-a {
+            font-weight: 700;
+        }
     </style>
 </head>
 <body class="bg-gray-50 flex items-center justify-center p-4 min-h-screen">
 
 <div class="container flex flex-col gap-8">
-    
+
     <div class="text-center">
         <h1 class="text-emerald-600">Lesson 1: Pat a Cat 🐱</h1>
     </div>
@@ -87,25 +90,25 @@
             <span class="icon">✨</span>
             <h3 class="text-emerald-700">Phonics Focus: Short 'a'</h3>
         </div>
-        <p class="mt-2 text-gray-700">Today's sound is short **a** like in c**a**t.</p>
+        <p class="mt-2 text-gray-700">Today's sound is short <span class="bold-a">a</span> like in c<span class="bold-a">a</span>t.</p>
         <div class="section-title mt-6">
             <span class="icon">📚</span>
             <h3 class="text-emerald-700">Words We Know</h3>
         </div>
         <div id="words-we-know" class="flex flex-wrap gap-4 mt-2 text-xl font-semibold">
-            <span class="short-a-word p-2 bg-emerald-100 rounded-md">c**a**t</span>
-            <span class="short-a-word p-2 bg-emerald-100 rounded-md">m**a**t</span>
-            <span class="short-a-word p-2 bg-emerald-100 rounded-md">r**a**n</span>
-            <span class="short-a-word p-2 bg-emerald-100 rounded-md">s**a**d</span>
-            <span class="short-a-word p-2 bg-emerald-100 rounded-md">b**a**g</span>
-            <span class="short-a-word p-2 bg-emerald-100 rounded-md">j**a**m</span>
-            <span class="short-a-word p-2 bg-emerald-100 rounded-md">p**a**d</span>
-            <span class="short-a-word p-2 bg-emerald-100 rounded-md">h**a**t</span>
-            <span class="short-a-word p-2 bg-emerald-100 rounded-md">l**a**p</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">c<span class="bold-a">a</span>t</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">m<span class="bold-a">a</span>t</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">r<span class="bold-a">a</span>n</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">s<span class="bold-a">a</span>d</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">b<span class="bold-a">a</span>g</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">j<span class="bold-a">a</span>m</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">p<span class="bold-a">a</span>d</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">h<span class="bold-a">a</span>t</span>
+            <span class="short-a-word p-2 bg-emerald-100 rounded-md">l<span class="bold-a">a</span>p</span>
         </div>
     </div>
 
-    <!-- Reading Story -->
+    <!-- Reading Story 1 -->
     <div class="bg-yellow-50 p-6 rounded-xl shadow-inner">
         <div class="section-title">
             <span class="icon">📖</span>
@@ -115,6 +118,40 @@
         <div id="story-1-text" class="text-lg leading-relaxed mt-4">
             A cat sat on a mat. The cat is fat. Pat the cat. The cat is happy. Sam has a bag. The bag has jam. Sam is not sad. Sam has a hat. He ran to get his hat. He is happy!
         </div>
+    </div>
+
+    <!-- Reading Story 2 -->
+    <div class="bg-yellow-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">📚</span>
+            <h3 class="text-yellow-700">Let's Read Another Story!</h3>
+        </div>
+        <p class="mt-2 text-gray-700">Click on the words with a short 'a' sound to highlight them!</p>
+        <div id="story-2-text" class="text-lg leading-relaxed mt-4">
+            Sam is a boy. He has a cat. The cat is black. The cat is on a soft mat. We can see the cat run. The cat ran fast! The cat is happy now. Sam is not sad. We play with the cat. Sam tosses a red ball. The cat runs after the ball. We love to watch the cat. The cat is a good friend. Sam is happy to have his cat. He pets the cat on its head. The cat likes to be pet. It takes a little nap. The cat is a good pet. This is a happy day!
+        </div>
+    </div>
+
+    <!-- Comprehension Questions -->
+    <div class="bg-purple-50 p-6 rounded-xl shadow-inner">
+        <div class="section-title">
+            <span class="icon">🤔</span>
+            <h3 class="text-purple-700">Comprehension Questions</h3>
+        </div>
+        <ol class="list-decimal list-inside mt-4 text-gray-700 flex flex-col gap-4">
+            <li>What color is the cat?
+                <input type="text" id="q1-input" class="p-2 border rounded-md w-full">
+            </li>
+            <li>What does the cat sit on?
+                <input type="text" id="q2-input" class="p-2 border rounded-md w-full">
+            </li>
+            <li>What does Sam toss for the cat?
+                <input type="text" id="q3-input" class="p-2 border rounded-md w-full">
+            </li>
+            <li>Why do you think Sam is happy to have his cat?
+                <input type="text" id="q4-input" class="p-2 border rounded-md w-full">
+            </li>
+        </ol>
     </div>
 
     <!-- Grammar Time -->
@@ -160,23 +197,29 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- Story Highlighter ---
-        const storyText = document.getElementById('story-1-text');
         const shortAWords = ["cat", "sat", "mat", "fat", "pat", "has", "bag", "jam", "sad", "hat", "ran", "happy"];
-        const storyWords = storyText.textContent.trim().split(/\s+/);
-        storyText.innerHTML = '';
-        storyWords.forEach(word => {
-            const span = document.createElement('span');
-            span.textContent = word + ' ';
-            const cleanedWord = word.toLowerCase().replace(/[.,!?'"]/, '');
-            if (shortAWords.includes(cleanedWord)) {
-                span.classList.add('short-a-word');
-                span.addEventListener('click', () => {
-                    span.classList.toggle('highlighted');
-                });
-            }
-            storyText.appendChild(span);
-        });
+        
+        // --- Story Highlighters ---
+        function setupStoryHighlighter(storyId) {
+            const storyText = document.getElementById(storyId);
+            const storyWords = storyText.textContent.trim().split(/\s+/);
+            storyText.innerHTML = '';
+            storyWords.forEach(word => {
+                const span = document.createElement('span');
+                span.textContent = word + ' ';
+                const cleanedWord = word.toLowerCase().replace(/[.,!?'"]/, '');
+                if (shortAWords.includes(cleanedWord)) {
+                    span.classList.add('short-a-word');
+                    span.addEventListener('click', () => {
+                        span.classList.toggle('highlighted');
+                    });
+                }
+                storyText.appendChild(span);
+            });
+        }
+
+        setupStoryHighlighter('story-1-text');
+        setupStoryHighlighter('story-2-text');
 
         // --- Words We Know Pop-up ---
         const wordsWeKnow = document.querySelectorAll('#words-we-know .short-a-word');
@@ -287,7 +330,6 @@
             showFeedback('Hmm, I don\'t see a word from our list. Try again!', 'incorrect');
         }
     }
-
 </script>
 
 </body>
